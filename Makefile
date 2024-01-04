@@ -1,4 +1,4 @@
-V = 
+V = @
 
 DEBUG = -g
 
@@ -11,7 +11,7 @@ DIR = srcs
 C_DIR = $(DIR)/C/
 ASM_DIR = $(DIR)/ASM/
 
-# C_SRC_COLLEEN = Colleen.c
+C_SRC_COLLEEN = Colleen.c
 # C_SRC_GRACE = Grace.c
 # C_SRC_SULLY = Sully.c
 
@@ -52,22 +52,47 @@ ASM_OBJ = $(ASM_OBJ_COLLEEN) $(ASM_OBJ_GRACE) $(ASM_OBJ_SULLY)
 DEPEND = $(C_SRCS_COLLEEN:.c=.d) $(C_SRCS_GRACE:.c=.d) $(C_SRCS_SULLY:.c=.d)
 
 .PHONY: all
-all: $(NAME_COLLEEN) # $(NAME_GRACE) $(NAME_SULLY)
+all: $(C_DIR)/$(NAME_COLLEEN) $(ASM_DIR)/$(NAME_COLLEEN) # $(NAME_GRACE) $(NAME_SULLY)
 
 .PHONY: test
-test: all
-	$(V)./$(NAME_COLLEEN) > tmp_Colleen
-	-$(V)diff tmp_Colleen $(C_SRCS_COLLEEN) && echo -e "Colleen: \033[32mOK\033[0m" || echo -e "Colleen: \033[31mKO\033[0m"
-	$(V)rm -f tmp_Colleen
+test: test_c test_asm
+	$(V)echo -e "Test Done!"
 
-$(NAME_COLLEEN): $(ASM_OBJ_COLLEEN) $(C_OBJ_COLLEEN)
-	$(V)$(CC) $(CFLAGS) -o $(NAME_COLLEEN) $(ASM_OBJ_COLLEEN) $(C_OBJ_COLLEEN)
+.PHONY: test_c
+test_c: re
+	$(V)./$(C_DIR)/$(NAME_COLLEEN) > tmp_C_Colleen
+	$(V)diff tmp_C_Colleen $(C_SRCS_COLLEEN) && echo -e "C Colleen: \033[32mOK\033[0m" || echo -e "C Colleen: \033[31mKO\033[0m"
+	$(V)rm -f tmp_C_Colleen
 
-$(NAME_GRACE): $(ASM_OBJ_GRACE) $(C_OBJ_GRACE)
-	$(V)$(CC) $(CFLAGS) -o $(NAME_GRACE) $(ASM_OBJ_GRACE) $(C_OBJ_GRACE)
+.PHONY: test_asm
+test_asm: re
+	$(V)./$(ASM_DIR)/$(NAME_COLLEEN) > tmp_ASM_Colleen
+	-$(V)diff tmp_ASM_Colleen $(ASM_SRCS_COLLEEN) && echo -e "ASM Colleen: \033[32mOK\033[0m" || echo -e "ASM Colleen: \033[31mKO\033[0m"
+	$(V)rm -f tmp_ASM_Colleen
 
-$(NAME_SULLY): $(ASM_OBJ_SULLY) $(C_OBJ_SULLY)
-	$(V)$(CC) $(CFLAGS) -o $(NAME_SULLY) $(ASM_OBJ_SULLY) $(C_OBJ_SULLY)
+$(C_DIR)/$(NAME_COLLEEN): $(C_OBJ_COLLEEN)
+	$(V)$(CC) $(CFLAGS) -o $(C_DIR)/$(NAME_COLLEEN) $(C_OBJ_COLLEEN)
+
+$(C_DIR)/$(NAME_GRACE): $(C_OBJ_GRACE)
+	$(V)$(CC) $(CFLAGS) -o $(C_DIR)/$(NAME_GRACE) $(C_OBJ_GRACE)
+
+$(C_DIR)/$(NAME_SULLY): $(C_OBJ_SULLY)
+	$(V)$(CC) $(CFLAGS) -o $(C_DIR)/$(NAME_SULLY) $(C_OBJ_SULLY)
+
+$(ASM_DIR)/$(NAME_COLLEEN): $(ASM_OBJ_COLLEEN)
+	$(V)$(CC) $(CFLAGS) -o $(ASM_DIR)/$(NAME_COLLEEN) $(ASM_OBJ_COLLEEN)
+
+$(ASM_DIR)/$(NAME_GRACE): $(ASM_OBJ_GRACE)
+	$(V)$(CC) $(CFLAGS) -o $(ASM_DIR)/$(NAME_GRACE) $(ASM_OBJ_GRACE)
+
+$(ASM_DIR)/$(NAME_SULLY): $(ASM_OBJ_SULLY)
+	$(V)$(CC) $(CFLAGS) -o $(ASM_DIR)/$(NAME_SULLY) $(ASM_OBJ_SULLY)
+
+%.o: %.c
+	$(V)$(CC) $(CFLAGS) -c $< -o $@
+
+%.o: %.s
+	$(V)$(AS) $(ASFLAGS) $< -o $@
 
 .PHONY: clean
 clean:
@@ -75,7 +100,8 @@ clean:
 
 .PHONY: fclean
 fclean: clean
-	$(V)rm -rf $(NAME_COLLEEN) $(NAME_GRACE) $(NAME_SULLY)
+	$(V)rm -rf $(C_DIR)/$(NAME_COLLEEN) $(C_DIR)/$(NAME_GRACE) $(C_DIR)/$(NAME_SULLY)
+	$(V)rm -rf $(ASM_DIR)/$(NAME_COLLEEN) $(ASM_DIR)/$(NAME_GRACE) $(ASM_DIR)/$(NAME_SULLY)
 
 .PHONY: re
 re: fclean all
