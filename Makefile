@@ -12,18 +12,16 @@ C_DIR = $(DIR)/C/
 ASM_DIR = $(DIR)/ASM/
 
 C_SRC_COLLEEN = Colleen.c
-# C_SRC_GRACE = Grace.c
-# C_SRC_SULLY = Sully.c
+C_SRC_GRACE = Grace.c
+C_SRC_SULLY = Sully.c
 
-
-# Uncomment to use ASM
 ASM_SRC_COLLEEN = Colleen.s
-# ASM_SRC_GRACE = Grace.s
+ASM_SRC_GRACE = Grace.s
 # ASM_SRC_SULLY = Sully.s
 
 
 AS = nasm
-CC = gcc
+CC = clang
 
 CFLAGS = -Wall -Wextra -Werror -MMD $(DEBUG)
 ASFLAGS = -f elf64 $(DEBUG)
@@ -52,11 +50,18 @@ ASM_OBJ = $(ASM_OBJ_COLLEEN) $(ASM_OBJ_GRACE) $(ASM_OBJ_SULLY)
 DEPEND = $(C_SRCS_COLLEEN:.c=.d) $(C_SRCS_GRACE:.c=.d) $(C_SRCS_SULLY:.c=.d)
 
 .PHONY: all
-all: $(C_DIR)/$(NAME_COLLEEN) $(ASM_DIR)/$(NAME_COLLEEN) # $(NAME_GRACE) $(NAME_SULLY)
+all: $(C_DIR)/$(NAME_COLLEEN) \
+	$(ASM_DIR)/$(NAME_COLLEEN) \
+	$(C_DIR)/$(NAME_GRACE) \
+	$(ASM_DIR)/$(NAME_GRACE) \
+	$(C_DIR)/$(NAME_SULLY) \
+	# $(ASM_DIR)/$(NAME_SULLY)
 
 .PHONY: test
 test: test_c test_asm
-	$(V)echo -e "Test Done!"
+	$(V)echo -e "Mandatory Test Done!\n"
+
+test_bonus: test
 
 .PHONY: test_c
 test_c: re
@@ -64,11 +69,19 @@ test_c: re
 	$(V)diff tmp_C_Colleen $(C_SRCS_COLLEEN) && echo -e "C Colleen: \033[32mOK\033[0m" || echo -e "C Colleen: \033[31mKO\033[0m"
 	$(V)rm -f tmp_C_Colleen
 
+	$(V)./$(C_DIR)/$(NAME_GRACE)
+	$(V)diff Grace_kid.c $(C_SRCS_GRACE) && echo -e "C Grace: \033[32mOK\033[0m" || echo -e "C Grace: \033[31mKO\033[0m"
+	$(V)rm -f Grace_kid.c
+
 .PHONY: test_asm
 test_asm: re
 	$(V)./$(ASM_DIR)/$(NAME_COLLEEN) > tmp_ASM_Colleen
 	-$(V)diff tmp_ASM_Colleen $(ASM_SRCS_COLLEEN) && echo -e "ASM Colleen: \033[32mOK\033[0m" || echo -e "ASM Colleen: \033[31mKO\033[0m"
 	$(V)rm -f tmp_ASM_Colleen
+
+	$(V)./$(ASM_DIR)/$(NAME_GRACE)
+	-$(V)diff Grace_kid.s $(ASM_SRCS_GRACE) && echo -e "ASM Grace: \033[32mOK\033[0m" || echo -e "ASM Grace: \033[31mKO\033[0m"
+	$(V)rm -f Grace_kid.s
 
 $(C_DIR)/$(NAME_COLLEEN): $(C_OBJ_COLLEEN)
 	$(V)$(CC) $(CFLAGS) -o $(C_DIR)/$(NAME_COLLEEN) $(C_OBJ_COLLEEN)
