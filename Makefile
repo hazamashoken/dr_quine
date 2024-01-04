@@ -1,4 +1,6 @@
-V = @
+V = 
+
+DEBUG = -g
 
 NAME_COLLEEN =  Colleen
 NAME_GRACE = Grace
@@ -9,13 +11,13 @@ DIR = srcs
 C_DIR = $(DIR)/C/
 ASM_DIR = $(DIR)/ASM/
 
-C_SRC_COLLEEN = Colleen.c
-C_SRC_GRACE = Grace.c
-C_SRC_SULLY = Sully.c
+# C_SRC_COLLEEN = Colleen.c
+# C_SRC_GRACE = Grace.c
+# C_SRC_SULLY = Sully.c
 
 
 # Uncomment to use ASM
-# ASM_SRC_COLLEEN = Colleen.s
+ASM_SRC_COLLEEN = Colleen.s
 # ASM_SRC_GRACE = Grace.s
 # ASM_SRC_SULLY = Sully.s
 
@@ -23,8 +25,8 @@ C_SRC_SULLY = Sully.c
 AS = nasm
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -MMD -g
-ASFLAGS = -f elf64
+CFLAGS = -Wall -Wextra -Werror -MMD $(DEBUG)
+ASFLAGS = -f elf64 $(DEBUG)
 
 C_SRCS_COLLEEN = $(addprefix $(C_DIR), $(C_SRC_COLLEEN))
 C_SRCS_GRACE = $(addprefix $(C_DIR), $(C_SRC_GRACE))
