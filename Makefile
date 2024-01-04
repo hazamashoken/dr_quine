@@ -17,7 +17,7 @@ C_SRC_SULLY = Sully.c
 
 ASM_SRC_COLLEEN = Colleen.s
 ASM_SRC_GRACE = Grace.s
-# ASM_SRC_SULLY = Sully.s
+ASM_SRC_SULLY = Sully.s
 
 
 AS = nasm
@@ -55,7 +55,7 @@ all: $(C_DIR)/$(NAME_COLLEEN) \
 	$(C_DIR)/$(NAME_GRACE) \
 	$(ASM_DIR)/$(NAME_GRACE) \
 	$(C_DIR)/$(NAME_SULLY) \
-	# $(ASM_DIR)/$(NAME_SULLY)
+	$(ASM_DIR)/$(NAME_SULLY)
 
 .PHONY: test
 test: test_c test_asm
@@ -72,6 +72,18 @@ test_c: re
 	$(V)./$(C_DIR)/$(NAME_GRACE)
 	$(V)diff Grace_kid.c $(C_SRCS_GRACE) && echo -e "C Grace: \033[32mOK\033[0m" || echo -e "C Grace: \033[31mKO\033[0m"
 	$(V)rm -f Grace_kid.c
+
+	$(v)mkdir -p test
+	$(v)mkdir -p test/$(C_DIR)
+	$(V)cp ./$(C_DIR)/$(NAME_SULLY) ./test/$(C_DIR)/$(NAME_SULLY)
+	$(V)cd ./test/$(C_DIR) && ./$(NAME_SULLY)
+	$(V)diff ./test/$(C_DIR)Sully_5.c $(C_SRCS_SULLY) && echo -e "C Sully: \033[32mOK\033[0m" || echo -e "C Sully: \033[31mKO\033[0m"
+	$(V)diff ./test/$(C_DIR)Sully_4.c $(C_SRCS_SULLY) && echo -e "C Sully: \033[31mKO\033[0m" || echo -e "C Sully: \033[32mOK\033[0m"
+	$(V)diff ./test/$(C_DIR)Sully_3.c $(C_SRCS_SULLY) && echo -e "C Sully: \033[31mKO\033[0m" || echo -e "C Sully: \033[32mOK\033[0m"
+	$(V)diff ./test/$(C_DIR)Sully_2.c $(C_SRCS_SULLY) && echo -e "C Sully: \033[31mKO\033[0m" || echo -e "C Sully: \033[32mOK\033[0m"
+	$(V)diff ./test/$(C_DIR)Sully_1.c $(C_SRCS_SULLY) && echo -e "C Sully: \033[31mKO\033[0m" || echo -e "C Sully: \033[32mOK\033[0m"
+	$(V)diff ./test/$(C_DIR)Sully_0.c $(C_SRCS_SULLY) && echo -e "C Sully: \033[31mKO\033[0m" || echo -e "C Sully: \033[32mOK\033[0m"
+	$(V)rm -rf ./test/$(C_DIR)
 
 .PHONY: test_asm
 test_asm: re
@@ -110,6 +122,7 @@ $(ASM_DIR)/$(NAME_SULLY): $(ASM_OBJ_SULLY)
 .PHONY: clean
 clean:
 	$(V)rm -rf $(ASM_OBJ) $(C_OBJ) $(DEPEND)
+	$(V)rm -rf test
 
 .PHONY: fclean
 fclean: clean
