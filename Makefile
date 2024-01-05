@@ -95,6 +95,18 @@ test_asm: re
 	-$(V)diff Grace_kid.s $(ASM_SRCS_GRACE) && echo -e "ASM Grace: \033[32mOK\033[0m" || echo -e "ASM Grace: \033[31mKO\033[0m"
 	$(V)rm -f Grace_kid.s
 
+	$(v)mkdir -p test
+	$(v)mkdir -p test/$(ASM_DIR)
+	$(V)cp ./$(ASM_DIR)/$(NAME_SULLY) ./test/$(ASM_DIR)/$(NAME_SULLY)
+	$(V)cd ./test/$(ASM_DIR) && ./$(NAME_SULLY)
+	$(V)diff ./test/$(ASM_DIR)Sully_5.s $(ASM_SRCS_SULLY) && echo -e "ASM Sully: \033[32mOK\033[0m" || echo -e "ASM Sully: \033[31mKO\033[0m"
+	$(V)diff ./test/$(ASM_DIR)Sully_4.s $(ASM_SRCS_SULLY) && echo -e "ASM Sully: \033[31mKO\033[0m" || echo -e "ASM Sully: \033[32mOK\033[0m"
+	$(V)diff ./test/$(ASM_DIR)Sully_3.s $(ASM_SRCS_SULLY) && echo -e "ASM Sully: \033[31mKO\033[0m" || echo -e "ASM Sully: \033[32mOK\033[0m"
+	$(V)diff ./test/$(ASM_DIR)Sully_2.s $(ASM_SRCS_SULLY) && echo -e "ASM Sully: \033[31mKO\033[0m" || echo -e "ASM Sully: \033[32mOK\033[0m"
+	$(V)diff ./test/$(ASM_DIR)Sully_1.s $(ASM_SRCS_SULLY) && echo -e "ASM Sully: \033[31mKO\033[0m" || echo -e "ASM Sully: \033[32mOK\033[0m"
+	$(V)diff ./test/$(ASM_DIR)Sully_0.s $(ASM_SRCS_SULLY) && echo -e "ASM Sully: \033[31mKO\033[0m" || echo -e "ASM Sully: \033[32mOK\033[0m"
+	$(V)rm -rf ./test/$(ASM_DIR)
+
 $(C_DIR)/$(NAME_COLLEEN): $(C_OBJ_COLLEEN)
 	$(V)$(CC) $(CFLAGS) -o $(C_DIR)/$(NAME_COLLEEN) $(C_OBJ_COLLEEN)
 
