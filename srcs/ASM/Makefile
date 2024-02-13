@@ -101,6 +101,7 @@ $(ASM_DIR)/$(NAME_SULLY): $(ASM_OBJ_SULLY)
 clean:
 	$(V)rm -rf $(ASM_OBJ) $(C_OBJ) $(DEPEND)
 	$(V)rm -rf test tmp_ASM_Colleen Grace_kid.s
+	$(V)rm -f Sully_*
 
 .PHONY: fclean
 fclean: clean
