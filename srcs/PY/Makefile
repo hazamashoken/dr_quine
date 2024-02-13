@@ -8,19 +8,19 @@ test: colleen grace sully
 
 .PHONY: colleen
 colleen:
-	$(V)python Colleen.py > tmp_Colleen.py
+	$(V)python3 Colleen.py > tmp_Colleen.py
 	$(V)diff tmp_Colleen.py Colleen.py && echo -e "Python Colleen: \033[32mOK\033[0m" || echo -e "Python Colleen: \033[31mKO\033[0m"
 
 .PHONY: grace
 grace:
-	$(V)python Grace.py
+	$(V)python3 Grace.py
 	$(V)diff Grace_kid.py Grace.py && echo -e "Python Grace: \033[32mOK\033[0m" || echo -e "Python Grace: \033[31mKO\033[0m"
 
 .PHONY: sully
 sully:
 	$(V)mkdir -p test
 	$(V)cp Sully.py test/Sully.py
-	$(V)cd test && python Sully.py
+	$(V)cd test && python3 Sully.py
 	$(V)diff test/Sully_5.py Sully.py && echo -e "Python Sully: \033[32mOK\033[0m" || echo -e "Python Sully: \033[31mKO\033[0m"
 	$(V)diff test/Sully_4.py Sully.py && echo -e "Python Sully: \033[31mKO\033[0m" || echo -e "Python Sully: \033[32mOK\033[0m"
 	$(V)diff test/Sully_3.py Sully.py && echo -e "Python Sully: \033[31mKO\033[0m" || echo -e "Python Sully: \033[32mOK\033[0m"

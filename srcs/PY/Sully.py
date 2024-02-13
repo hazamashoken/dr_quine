@@ -11,7 +11,7 @@ def main():
     with open(f"Sully_{{i}}.py", "w") as f:
         f.write(CODE.format(CODE, chr(34), i))
         f.close()
-    subprocess.run(["python", f"Sully_{{i}}.py"])
+    subprocess.run(["python3", f"Sully_{{i}}.py"])
 
 if __name__ == "__main__":
     main()
@@ -26,7 +26,7 @@ def main():
     with open(f"Sully_{i}.py", "w") as f:
         f.write(CODE.format(CODE, chr(34), i))
         f.close()
-    subprocess.run(["python", f"Sully_{i}.py"])
+    subprocess.run(["python3", f"Sully_{i}.py"])
 
 if __name__ == "__main__":
     main()
