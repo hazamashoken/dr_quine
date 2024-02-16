@@ -1,10 +1,11 @@
 section .rodata
-CODE db "section .rodata%4$cCODE db %3$c%1$s%3$c, 0%4$cFILE_TEMPLATE db %3$cSully_%%d.s%3$c, 0%4$cOBJ_TEMPLATE db %3$cSully_%%d.o%3$c, 0%4$cEXEC_TEMPLATE db %3$c./Sully_%%d%3$c, 0%4$cCOMPILE_STRING db %3$cnasm -felf64 %%s%3$c, 0%4$cCMD_STRING db %3$cclang -o %%s %%s%3$c, 0%4$cFILENAME db __FILE__, 0%4$c%4$csection .data%4$cX_VALUE dq %2$d%4$cfilename times 100 db 0%4$cobjname times 100 db 0%4$cexecname times 100 db 0%4$ccmdline times 100 db 0%4$ccompileline times 100 db 0%4$c%4$csection .text%4$cglobal main%4$cextern system%4$cextern sprintf%4$cextern dprintf%4$cextern strstr%4$c%4$cmain:%4$cENTER 0,0%4$cPUSH rbx%4$cPUSH r12%4$cXOR rax, rax%4$cMOV rbx, qword [rel X_VALUE]%4$cCMP rbx, 0%4$cJLE .return%4$cLEA rdi, [rel filename]%4$cLEA rsi, [rel FILE_TEMPLATE]%4$cMOV rdx, rbx%4$cCALL sprintf wrt ..plt%4$cLEA rdi, [rel FILENAME]%4$cLEA rsi, [rel filename]%4$cCALL strstr wrt ..plt%4$cTEST rax, rax%4$cJZ .skip%4$cSUB rbx, 1%4$c.skip:%4$cLEA rdi, [rel filename]%4$cLEA rsi, [rel FILE_TEMPLATE]%4$cMOV rdx, rbx%4$cCALL sprintf wrt ..plt%4$cLEA rdi, [rel execname]%4$cLEA rsi, [rel EXEC_TEMPLATE]%4$cMOV rdx, rbx%4$cCALL sprintf wrt ..plt%4$cLEA rdi, [rel objname]%4$cLEA rsi, [rel OBJ_TEMPLATE]%4$cMOV rdx, rbx%4$cCALL sprintf wrt ..plt%4$cMOV rax, 2%4$cLEA rdi, [rel filename]%4$cMOV rsi, 577%4$cMOV rdx, 420%4$cSYSCALL%4$cMOV r12, rax%4$cMOV rdi, r12%4$cLEA rsi, [rel CODE]%4$cLEA rdx, [rel CODE]%4$cMOV rcx, rbx%4$cMOV r8, 34%4$cMOV r9, 10%4$cXOR rax, rax%4$cCALL dprintf wrt ..plt%4$cMOV rax, 3%4$cMOV rdi, r12%4$cSYSCALL%4$cLEA rdi, [rel compileline]%4$cLEA rsi, [rel COMPILE_STRING]%4$cLEA rdx, [rel filename]%4$cCALL sprintf wrt ..plt%4$cLEA rdi, [rel compileline]%4$cCALL system wrt ..plt%4$cLEA rdi, [rel cmdline]%4$cLEA rsi, [rel CMD_STRING]%4$cLEA rdx, [rel execname]%4$cLEA rcx, [rel objname]%4$cCALL sprintf wrt ..plt%4$cLEA rdi, [rel cmdline]%4$cCALL system wrt ..plt%4$cLEA rdi, [rel execname]%4$cCALL system wrt ..plt%4$c.return:%4$cPOP r12%4$cPOP rbx%4$cLEAVE%4$cRET", 0
+CODE db "section .rodata%4$cCODE db %3$c%1$s%3$c, 0%4$cFILE_TEMPLATE db %3$cSully_%%d.s%3$c, 0%4$cOBJ_TEMPLATE db %3$cSully_%%d.o%3$c, 0%4$cEXEC_TEMPLATE db %3$c./Sully_%%d%3$c, 0%4$cCOMPILE_STRING db %3$cnasm -felf64 %%s%3$c, 0%4$cCMD_STRING db %3$cclang -o %%s %%s%3$c, 0%4$cRM_STRING db %3$crm -f %%s%3$c, 0%4$cFILENAME db __FILE__, 0%4$c%4$csection .data%4$cX_VALUE dq %2$d%4$cfilename times 100 db 0%4$cobjname times 100 db 0%4$cexecname times 100 db 0%4$ccmdline times 100 db 0%4$ccompileline times 100 db 0%4$crmline times 100 db 0%4$c%4$csection .text%4$cglobal main%4$cextern system%4$cextern sprintf%4$cextern dprintf%4$cextern strstr%4$c%4$cmain:%4$cENTER 0,0%4$cPUSH rbx%4$cPUSH r12%4$cXOR rax, rax%4$cMOV rbx, qword [rel X_VALUE]%4$cCMP rbx, 0%4$cJLE .return%4$cLEA rdi, [rel filename]%4$cLEA rsi, [rel FILE_TEMPLATE]%4$cMOV rdx, rbx%4$cCALL sprintf wrt ..plt%4$cLEA rdi, [rel FILENAME]%4$cLEA rsi, [rel filename]%4$cCALL strstr wrt ..plt%4$cTEST rax, rax%4$cJZ .skip%4$cSUB rbx, 1%4$c.skip:%4$cLEA rdi, [rel filename]%4$cLEA rsi, [rel FILE_TEMPLATE]%4$cMOV rdx, rbx%4$cCALL sprintf wrt ..plt%4$cLEA rdi, [rel execname]%4$cLEA rsi, [rel EXEC_TEMPLATE]%4$cMOV rdx, rbx%4$cCALL sprintf wrt ..plt%4$cLEA rdi, [rel objname]%4$cLEA rsi, [rel OBJ_TEMPLATE]%4$cMOV rdx, rbx%4$cCALL sprintf wrt ..plt%4$cMOV rax, 2%4$cLEA rdi, [rel filename]%4$cMOV rsi, 577%4$cMOV rdx, 420%4$cSYSCALL%4$cMOV r12, rax%4$cMOV rdi, r12%4$cLEA rsi, [rel CODE]%4$cLEA rdx, [rel CODE]%4$cMOV rcx, rbx%4$cMOV r8, 34%4$cMOV r9, 10%4$cXOR rax, rax%4$cCALL dprintf wrt ..plt%4$cMOV rax, 3%4$cMOV rdi, r12%4$cSYSCALL%4$cLEA rdi, [rel compileline]%4$cLEA rsi, [rel COMPILE_STRING]%4$cLEA rdx, [rel filename]%4$cCALL sprintf wrt ..plt%4$cLEA rdi, [rel compileline]%4$cCALL system wrt ..plt%4$cLEA rdi, [rel cmdline]%4$cLEA rsi, [rel CMD_STRING]%4$cLEA rdx, [rel execname]%4$cLEA rcx, [rel objname]%4$cCALL sprintf wrt ..plt%4$cLEA rdi, [rel rmline]%4$cLEA rsi, [rel RM_STRING]%4$cLEA rdx, [rel objname]%4$cCALL sprintf wrt ..plt%4$cLEA rdi, [rel cmdline]%4$cCALL system wrt ..plt%4$cLEA rdi, [rel rmline]%4$cCALL system wrt ..plt%4$cLEA rdi, [rel execname]%4$cCALL system wrt ..plt%4$c.return:%4$cPOP r12%4$cPOP rbx%4$cLEAVE%4$cRET", 0
 FILE_TEMPLATE db "Sully_%d.s", 0
 OBJ_TEMPLATE db "Sully_%d.o", 0
 EXEC_TEMPLATE db "./Sully_%d", 0
 COMPILE_STRING db "nasm -felf64 %s", 0
 CMD_STRING db "clang -o %s %s", 0
+RM_STRING db "rm -f %s", 0
 FILENAME db __FILE__, 0
 
 section .data
@@ -14,6 +15,7 @@ objname times 100 db 0
 execname times 100 db 0
 cmdline times 100 db 0
 compileline times 100 db 0
+rmline times 100 db 0
 
 section .text
 global main
@@ -81,7 +83,13 @@ LEA rsi, [rel CMD_STRING]
 LEA rdx, [rel execname]
 LEA rcx, [rel objname]
 CALL sprintf wrt ..plt
+LEA rdi, [rel rmline]
+LEA rsi, [rel RM_STRING]
+LEA rdx, [rel objname]
+CALL sprintf wrt ..plt
 LEA rdi, [rel cmdline]
+CALL system wrt ..plt
+LEA rdi, [rel rmline]
 CALL system wrt ..plt
 LEA rdi, [rel execname]
 CALL system wrt ..plt

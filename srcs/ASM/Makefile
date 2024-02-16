@@ -81,6 +81,9 @@ test_asm: re
 	$(V)diff ./test/$(ASM_DIR)Sully_2.s $(ASM_SRCS_SULLY) && echo -e "ASM Sully: \033[31mKO\033[0m" || echo -e "ASM Sully: \033[32mOK\033[0m"
 	$(V)diff ./test/$(ASM_DIR)Sully_1.s $(ASM_SRCS_SULLY) && echo -e "ASM Sully: \033[31mKO\033[0m" || echo -e "ASM Sully: \033[32mOK\033[0m"
 	$(V)diff ./test/$(ASM_DIR)Sully_0.s $(ASM_SRCS_SULLY) && echo -e "ASM Sully: \033[31mKO\033[0m" || echo -e "ASM Sully: \033[32mOK\033[0m"
+	$(V)echo this should say 13
+	ls -1A ./test | wc -l
+       
 
 $(ASM_DIR)/$(NAME_COLLEEN): $(ASM_OBJ_COLLEEN)
 	$(V)$(CC) $(CFLAGS) -o $(ASM_DIR)/$(NAME_COLLEEN) $(ASM_OBJ_COLLEEN)
